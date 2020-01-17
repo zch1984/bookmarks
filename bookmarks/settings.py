@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -27,26 +26,26 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
-    'account.apps.AccountConfig',   # 激活account应用,必须在admin和auth之前，否则会加载admin模板
+    'account.apps.AccountConfig',  # 激活account应用,必须在admin和auth之前，否则会加载admin模板
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',  # SocialAuth模块，简化向站点中添加社交验证过程
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',            #
-    'django.contrib.sessions.middleware.SessionMiddleware',     # 处理请求间的当前会话
+    'django.middleware.security.SecurityMiddleware',  #
+    'django.contrib.sessions.middleware.SessionMiddleware',  # 处理请求间的当前会话
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',  # 使用会话将用户于请求关联起来
-    'django.contrib.messages.middleware.MessageMiddleware',     # 消息框架
+    'django.contrib.messages.middleware.MessageMiddleware',  # 消息框架
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -70,7 +69,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bookmarks.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -80,7 +78,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -100,7 +97,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -114,25 +110,35 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = 'dashboard'    # 如果请求中未出现next参数，在成功登录后，将通知Django重定向的URL
-LOGIN_URL = 'login'                 # 用户重定向并实现登录的URL（例如使用login_required装饰器的视图）
-LOGOUT_URL = 'logout'               # 用户重定向并实现注销的URL
+LOGIN_REDIRECT_URL = 'dashboard'  # 如果请求中未出现next参数，在成功登录后，将通知Django重定向的URL
+LOGIN_URL = 'login'  # 用户重定向并实现登录的URL（例如使用login_required装饰器的视图）
+LOGOUT_URL = 'logout'  # 用户重定向并实现注销的URL
 
 # 电子邮件后端
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # 通过开发服务器提供用户上传的媒体文件
-MEDIA_URL = '/media/'     # 为用户上传的媒体文件提供服务的基URL
+MEDIA_URL = '/media/'  # 为用户上传的媒体文件提供服务的基URL
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')  # 用户驻留的本地路径
 
 # 自定义后台验证，该设置中列出的后端顺序很重要。如果相同的凭证对多个后端均有效，Django将在成功验证用户的第一个后端处停止。就是想先验证哪个就把哪个放在上方
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',    # 系统默认的后台验证功能
-    'account.authentication.EmailAuthBackend',      # 自定义的后台验证
+    'django.contrib.auth.backends.ModelBackend',  # 系统默认的后台验证功能
+    'account.authentication.EmailAuthBackend',  # 自定义的后台验证
+    # 第三方登录
+    'social_core.backends.weixin.WeixinOAuth2',  # 使用微信登录
+    'social_core.backends.qq.QQOAuth2',          # 使用QQ登录
 ]
+
+# ALLOWED_HOSTS设置控制主机并为应用提供服务，路径为C:\Windows\System32\drivers\etc\hosts
+ALLOWED_HOSTS = ['activate.navicat.com', 'localhost', '127.0.0.1']
+
+# 腾讯AppID和AppSecret
+SOCIAL_AUTH_QQ_KEY = '1110225338'
+SOCIAL_AUTH_QQ_SECRET = 'DzvHFl0e8Gkh60GU'
+SOCIAL_AUTH_QQ_SCOPE = ['email']    # 向QQ用户请求的额外权限
