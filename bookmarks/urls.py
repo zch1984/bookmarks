@@ -21,6 +21,8 @@ from django.conf.urls.static import static    # static()帮助函数适用于开
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('account.urls')),      # 添加account路由
+    path('social-auth/', include('social_django.urls', namespace='social')),   # 第三方登录路由
+    path('images/', include('images.urls', namespace='images')),        # 添加images路由
 ]
 
 if settings.DEBUG:   # 通过这一方式，Django开发服务器将负责在开发期间为媒体文件提供服务（也就是说DEBUG设置为True）

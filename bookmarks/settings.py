@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',  # SocialAuth模块，简化向站点中添加社交验证过程
+    'images.apps.ImagesConfig',  # 图像书签
 ]
 
 MIDDLEWARE = [
@@ -132,13 +133,16 @@ AUTHENTICATION_BACKENDS = [
     'account.authentication.EmailAuthBackend',  # 自定义的后台验证
     # 第三方登录
     'social_core.backends.weixin.WeixinOAuth2',  # 使用微信登录
-    'social_core.backends.qq.QQOAuth2',          # 使用QQ登录
+    'social_core.backends.qq.QQOAuth2',  # 使用QQ登录
 ]
 
 # ALLOWED_HOSTS设置控制主机并为应用提供服务，路径为C:\Windows\System32\drivers\etc\hosts
-ALLOWED_HOSTS = ['activate.navicat.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['activate.navicat.com',
+                 'localhost',
+                 '127.0.0.1',
+                 'e0d2ccfc.ngrok.io']
 
 # 腾讯AppID和AppSecret
 SOCIAL_AUTH_QQ_KEY = '1110225338'
 SOCIAL_AUTH_QQ_SECRET = 'DzvHFl0e8Gkh60GU'
-SOCIAL_AUTH_QQ_SCOPE = ['email']    # 向QQ用户请求的额外权限
+SOCIAL_AUTH_QQ_SCOPE = ['email']  # 向QQ用户请求的额外权限
